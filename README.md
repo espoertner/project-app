@@ -10,9 +10,13 @@ API(s): Goodreads
 
 ## Features
 *Search for a book by author or title
+
 *Results are displayed with book title, author name and book photo (if available)
+
 *On click, a result will display the same information as well as a summary and rating
+
 *Users can authorize the app to access their Goodreads account info
+
 *Users can add, edit and delete a review for a book
 
 ## Milestones
