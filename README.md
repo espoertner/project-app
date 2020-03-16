@@ -1,16 +1,30 @@
-# My Project Plan Name
+# Goodreads but not ugly
 
 ## Project Summary
-What the project is about and will allow the user to do
+This project uses the Goodreads API to let people search for books by title or author. The app uses OAuth to allow users to add, edit or delete a book review.
 
 ## Technical summary
-Description of the languages, frameworks, libraries, APIs, list of database tables, or other tools that you will use on the project
+Language/framework: JavaScript with React
+API(s): Goodreads
 
 ## Features
-A list, preferably with bullet points or in a spreadsheet, of the features of your application. This list will be different for every project, but may include a list of web pages, interactive and/or non-interactive user features, the data being collected or processed, what the results will look like, viewable screens, and any other relevant description of user features for your application. In short, your mentors or a potential employer should know exactly what to expect from your project by reading this list without having seen it running.
+Search for a book by author or title
+Results are displayed with book title, author name and book photo (if available)
+On click, a result will display the same information as well as a summary and rating
+Users can authorize the app to access their Goodreads account info
+Users can add, edit and delete a review for a book
 
 ## Milestones
-List of each major step of the project that will result in completing the above feature list. This generally should be the order in which you will build the features/pages/etc. Milestones may include things like when you will build a certain page/screen, add in API endpoints, create your database, implement a certain framework/library, and other such details.
+Build the search function, integrating Goodreads' API
+Create styles for the home page and results with CSS
+Enable OAuth for the project-app
+Build the "add review" function
+Create styles for add, edit and delete functionalities with CSS
+Build the "edit review" and "delete review" functions
+Integrating React Router
 
 ## Requirements to run the project
-If your project requires anything special to run it, you must document this so mentors and potential employers can run your project. Examples of things to document include: having to install and run a jupyter notebook, running npm install in a certain directory, or running your project from Visual Studio.
+Acquire an API key from Goodreads: https://www.goodreads.com/api/keys
+Save the API key in a .env file
+Running npm install in project-app directory
+Run npm start in project-app directory
