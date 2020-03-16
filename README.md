@@ -20,19 +20,19 @@ API(s): Goodreads
 * Users can add, edit and delete a review for a book
 
 ## Milestones
-Build the search function, integrating Goodreads' API
+* Build the search function, integrating Goodreads' API
 
-Create styles for the home page and results with CSS
+* Create styles for the home page and results with CSS
 
-Enable OAuth for the project-app
+* Enable OAuth for the project-app
 
-Build the "add review" function
+* Build the "add review" function
 
-Create styles for add, edit and delete functionalities with CSS
+* Create styles for add, edit and delete functionalities with CSS
 
-Build the "edit review" and "delete review" functions
+* Build the "edit review" and "delete review" functions
 
-Integrating React Router
+* Integrate React Router
 
 ## Requirements to run the project
 Acquire an API key from [Goodreads](https://www.goodreads.com/api/keys)
