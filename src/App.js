@@ -1,23 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import topper from './book-topper.jpg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={topper} className="App-topper" alt="topper" />
+        <h1>Book App</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Search for a book, leave reviews and more. Powered by Goodreads.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
