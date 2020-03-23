@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
 import '../App.css';
 
+const apiKey = process.env.REACT_APP_GOODREADS_API_KEY;
+
 export default class SearchForm extends Component {
   
   state = {
-    searchText: ''
+    searchText: '',
+    books: {
+        results: []
+      },
+    bookDetails: {
+        title: "",
+        author: "",
+        image: "",
+        average_rating: ""
+    },
   }
   
   onSearchChange = e => {
     this.setState({ searchText: e.target.value });
+    this.fetchBooks();
   }
+
+  fetchBooks = async ( 
+    searchText = this.state.searchText,
+    URL =
+    `https://www.goodreads.com/search/index.xml?key=${apiKey}&q=${searchText}`
+) => {
+    const response = await fetch(URL);
+    const books = await response.json();
+    this.setState({ books: books });
+    console.log(books);
+    };
   
   handleSubmit = e => {
     e.preventDefault();
