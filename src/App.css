@@ -1,5 +1,15 @@
+/*App Styles*/
+/*Color palette
+dark blue: #3f5e63
+light blue: #69969c
+pink: #fda381
+orange: #f56237
+red: #a80000
+black/text: #050402
+*/
 .App {
-  text-align: center;
+  background-color:#fda381;
+  min-height:100vh;
 }
 
 .App-topper {
@@ -7,13 +17,12 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color:#fda381;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color:#050402;
 }
 
 p {
@@ -23,3 +32,28 @@ p {
 h1 {
   margin-bottom: 0;
 }
+
+button {
+  background-color: #f56237;
+  border-radius: 10px;
+  border: 0px;
+  padding: 5px 10px;
+  margin-left: 5px;
+}
+
+button:hover {
+  background-color: #a80000;
+  color: white;
+}
+
+/*Search bar styles*/
+.search-form {
+  padding: 10px;
+  text-align: center;
+  border: none;
+}
+
+/*Card styles*/
+
+
+/*Media queries */

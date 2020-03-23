@@ -1,5 +1,7 @@
 import React from 'react';
+import SearchForm from './components/SearchForm';
 import topper from './book-topper.jpg';
+// import BookList from './components/BookList';
 import './App.css';
 
 function App() {
@@ -12,6 +14,12 @@ function App() {
           Search for a book, leave reviews and more. Powered by Goodreads.
         </p>
       </header>
+      <div>
+        <SearchForm />
+      </div>
+      <div className="main-content">
+          {/* <BookList /> */}
+        </div>
     </div>
   );
 }
