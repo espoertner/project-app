@@ -31,7 +31,7 @@ export default class SearchForm extends Component {
   
   fetchBooks = async ( 
     searchText = this.state.searchText,
-    URL =
+    URL = `https://cors-anywhere.herokuapp.com/` +
     `https://www.goodreads.com/search/index.xml?key=${apiKey}&q=${searchText}`
 ) => {
     const response = await fetch(URL);
