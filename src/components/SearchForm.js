@@ -18,11 +18,13 @@ export default class SearchForm extends Component {
     },
   }
   
-  onSearchChange = e => {
+  handleSubmit = e => {
     this.setState({ searchText: e.target.value });
+    e.preventDefault();
+    e.currentTarget.reset();
     this.fetchBooks();
   }
-
+  
   fetchBooks = async ( 
     searchText = this.state.searchText,
     URL =
@@ -33,12 +35,7 @@ export default class SearchForm extends Component {
     this.setState({ books: books });
     console.log(books);
     };
-  
-  handleSubmit = e => {
-    e.preventDefault();
-    e.currentTarget.reset();
-  }
-  
+
   render() {  
     return (
       <form className="search-form" onSubmit={this.handleSubmit} >
