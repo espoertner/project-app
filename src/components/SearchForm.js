@@ -18,6 +18,10 @@ export default class SearchForm extends Component {
     },
   }
   
+  onSearchChange = input => {
+    this.setState({ searchText: input });
+  };
+
   handleSubmit = e => {
     this.setState({ searchText: e.target.value });
     e.preventDefault();
@@ -39,10 +43,13 @@ export default class SearchForm extends Component {
   render() {  
     return (
       <form className="search-form" onSubmit={this.handleSubmit} >
-        <input type="search" 
-               onChange={this.onSearchChange}
-               name="search" 
-               placeholder="Type author or title" />
+        <input
+          type="search"
+          onChange={e => this.onSearchChange(e.target.value)}
+          name="search"
+          value={this.state.searchText}
+          placeholder="Type author or title"
+        />
         <button type="submit" id="submit" className="search-button">search</button>
       </form>      
     );
