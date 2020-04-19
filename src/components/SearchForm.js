@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 
-const apiKey = process.env.REACT_APP_GOODREADS_API_KEY;
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export default class SearchForm extends Component {
   
@@ -31,7 +31,7 @@ export default class SearchForm extends Component {
   
   fetchBooks = async ( 
     searchText = this.state.searchText,
-    URL = `TO BE REPLACED WITH GOOD BOOKS API ${apiKey}&q=${searchText}`
+    URL = `https://www.googleapis.com/books/v1/volumes?q=${searchText}&key=${apiKey}&maxResults=20`
 ) => {
     const response = await fetch(URL);
     const books = await response.json();
