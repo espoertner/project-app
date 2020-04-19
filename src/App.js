@@ -11,7 +11,7 @@ function App() {
         <img src={topper} className="App-topper" alt="topper" />
         <h1>Book App</h1>
         <p>
-          Search for a book, leave reviews and more. Powered by Goodreads.
+          Search for a book, leave reviews and more. Powered by Google.
         </p>
       </header>
       <div>

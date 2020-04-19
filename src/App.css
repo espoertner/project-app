@@ -21,6 +21,7 @@ black/text: #050402
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   font-size: calc(10px + 2vmin);
   color:#050402;
 }
@@ -46,6 +47,20 @@ button:hover {
   color: white;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+li {
+  list-style: none;
+  width: 80%;
+  margin: auto;
+  padding: 1em;
+}
+
 /*Search bar styles*/
 .search-form {
   padding: 10px;
@@ -54,6 +69,15 @@ button:hover {
 }
 
 /*Card styles*/
-
+.books-card {
+  background: white;
+  color: black;
+  border-radius: 5px;
+  margin-top: 1em;
+  transition: all .2s ease-in-out;
+  overflow: hidden;
+}
 
 /*Media queries */
+
+/* li at larger screen sizes: width: 20%; display: inline-block; */

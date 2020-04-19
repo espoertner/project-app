@@ -52,20 +52,28 @@ export default class SearchForm extends Component {
           />
           <button type="submit" id="submit" className="search-button">search</button>
         </form>
+
         <div>
         <ul>
             {this.state.books.items.map(book => (
               <li
-                className="book-card"
+                className="books-card"
                 key={book.name}
               >
+                {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                 <h3>{book.volumeInfo.title}</h3>
+                {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
               </li>
             ))}
           </ul>
+
         </div>
 
       </div>      
     );
   }
 }
+
+//img thumbnail not working
+//would like to truncate long titles
+//need media quieries to display several on a line
