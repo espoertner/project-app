@@ -8,7 +8,7 @@ export default class SearchForm extends Component {
   state = {
     searchText: '',
     books: {
-        results: []
+        items: []
       },
     bookDetails: {
         title: "",
@@ -41,16 +41,31 @@ export default class SearchForm extends Component {
 
   render() {  
     return (
-      <form className="search-form" onSubmit={this.handleSubmit} >
-        <input
-          type="search"
-          onChange={e => this.onSearchChange(e.target.value)}
-          name="search"
-          value={this.state.searchText}
-          placeholder="Type author or title"
-        />
-        <button type="submit" id="submit" className="search-button">search</button>
-      </form>      
+      <div>
+        <form className="search-form" onSubmit={this.handleSubmit} >
+          <input
+            type="search"
+            onChange={e => this.onSearchChange(e.target.value)}
+            name="search"
+            value={this.state.searchText}
+            placeholder="Type book title"
+          />
+          <button type="submit" id="submit" className="search-button">search</button>
+        </form>
+        <div>
+        <ul>
+            {this.state.books.items.map(book => (
+              <li
+                className="book-card"
+                key={book.name}
+              >
+                <h3>{book.volumeInfo.title}</h3>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>      
     );
   }
 }
