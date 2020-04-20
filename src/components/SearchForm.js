@@ -11,11 +11,8 @@ export default class SearchForm extends Component {
         items: []
       },
     bookDetails: {
-        title: "",
-        author: "",
-        image: "",
-        average_rating: ""
     },
+    isInfoShowing: false,
   }
   
   onSearchChange = input => {
@@ -39,6 +36,15 @@ export default class SearchForm extends Component {
     console.log(books);
     };
 
+  moreDetails = () => {
+
+    this.setState({ isInfoShowing: true });
+  }
+
+  handleClose = () => {
+    this.setState({ isInfoShowing: false });
+  };
+
   render() {  
     return (
       <div>
@@ -50,24 +56,31 @@ export default class SearchForm extends Component {
             value={this.state.searchText}
             placeholder="Type book title"
           />
-          <button type="submit" id="submit" className="search-button">search</button>
+          <button type="submit" id="submit" className="search-button">Search</button>
         </form>
 
-        <div>
-        <ul>
-            {this.state.books.items.map(book => (
-              <li
-                className="books-card"
-                key={book.name}
-              >
-                {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
-                <h3>{book.volumeInfo.title}</h3>
-                {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
-              </li>
-            ))}
-          </ul>
-
-        </div>
+        <div id="main-content">
+          {this.state.isInfoShowing ? (
+            <div className="book-card-detail">
+              <p>I want to to display the title, authors and descrpition from the selected book. I think I need to set the key as the array number then set the book details state to that array item? IDK</p>
+              <button onClick={this.handleClose}>Exit</button>
+            </div>
+          ) : (
+            <ul>
+                {this.state.books.items.map(book => (
+                  <li
+                    className="books-card"
+                    key={book.etag}
+                    onClick={() => this.moreDetails()}
+                  >
+                    {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
+                    <h3>{book.volumeInfo.title}</h3>
+                    {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
+                  </li>
+                ))}
+              </ul>
+          )}
+      </div>  
 
       </div>      
     );
@@ -76,4 +89,5 @@ export default class SearchForm extends Component {
 
 //img thumbnail not working
 //would like to truncate long titles
+//catch if search yields no results
 //need media quieries to display several on a line
