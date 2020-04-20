@@ -67,6 +67,9 @@ li:hover {
   color: white;
 }
 
+li:last-child{
+  margin-bottom: 50px;
+}
 
 /*Search bar styles*/
 .search-form {
