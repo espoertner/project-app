@@ -98,7 +98,7 @@ export default class SearchForm extends Component {
         <div id="main-content">
           {this.state.isInfoShowing ? (
             <div className="book-card-detail">
-              <p>I want to to display the title, authors and descrpition from the selected book. I think I need to set the key as the array number then set the book details state to that array.</p>
+              <p>I want to to display the image, title, authors and descrpition from the selected book.</p>
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (

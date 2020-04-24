@@ -8,7 +8,7 @@ red: #a80000
 black/text: #050402
 */
 .App {
-  background-color:#fda381;
+  background-color: lightgray;
   min-height:100vh;
 }
 
