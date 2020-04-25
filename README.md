@@ -11,7 +11,7 @@ API(s): Google Books, Archive.org/Open Library (Open Library API's are a subset 
 ## Features
 * Search for a book by title or subject
 
-* Results are displayed with book title, author name and book photo (if available)
+* Results are displayed with book title author name and book photo (if available)
 
 * On click, a result will display the same information as well as a summary
 
@@ -31,10 +31,8 @@ API(s): Google Books, Archive.org/Open Library (Open Library API's are a subset 
 * Integrate React Router
 
 ## Requirements to run the project
-Google Book API requires a key. Acquire an API key by following Google's instructions [here](https://developers.google.com/books/docs/v1/getting_started)
+Google Book API requires a key. Acquire an API key by following Google's instructions [here](https://developers.google.com/books/docs/v1/getting_started). Save the API key in a .env file.
 
-Save the API key in a .env file
+Running npm install in project-app directory.
 
-Running npm install in project-app directory
-
-Run npm start in project-app directory
+Run npm start in project-app directory.

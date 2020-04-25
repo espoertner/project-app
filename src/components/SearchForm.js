@@ -7,13 +7,9 @@ export default class SearchForm extends Component {
   
   state = {
     searchText: '',
-    searchSubjectText: '',
     books: {
         items: []
       },
-    booksSubject: {
-      works: []
-    },
     bookDetails: {
     },
     isInfoShowing: false,
@@ -40,31 +36,10 @@ export default class SearchForm extends Component {
     console.log(books);
     };
 
-  onSearchSubjectChange = input => {
-    this.setState({ searchSubjectText: input });
-  };
-
-  handleSubjectSubmit = e => {
-    this.setState({ searchSubjectText: e.target.value });
-    e.preventDefault();
-    e.currentTarget.reset();
-    this.fetchSubjectBooks();
-  }
-
-  fetchSubjectBooks = async ( 
-    searchSubjectText = this.state.searchSubjectText,
-    URL = `http://openlibrary.org/subjects/${searchSubjectText}.json`
-) => {
-    const response = await fetch(URL);
-    const subject = await response.json();
-    this.setState({ booksSubject: subject });
-    console.log(subject);
-    };
-
   moreDetails = () => {
-    
+
     this.setState({ isInfoShowing: true });
-  }
+  };
 
   handleClose = () => {
     this.setState({ isInfoShowing: false });
@@ -80,17 +55,6 @@ export default class SearchForm extends Component {
             name="search"
             value={this.state.searchText}
             placeholder="Look for book by title"
-          />
-          <button type="submit" id="submit" className="search-button">Search</button>
-        </form>
-
-        <form className="search-form" onSubmit={this.handleSubjectSubmit} >
-          <input
-            type="search"
-            onChange={e => this.onSearchSubjectChange(e.target.value)}
-            name="search"
-            value={this.state.searchSubjectText}
-            placeholder="Look for book by subject"
           />
           <button type="submit" id="submit" className="search-button">Search</button>
         </form>
@@ -114,18 +78,6 @@ export default class SearchForm extends Component {
                     {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
                   </li>
                 ))}
-
-                {this.state.booksSubject.works.map(bookSub => (
-                  <li
-                    className="books-card"
-                    key={bookSub.key}
-                    onClick={() => this.moreDetails()}
-                  >
-                    {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
-                    <h3>{bookSub.title}</h3>
-                    <p>{bookSub.authors[0].name}</p>
-                  </li>
-                ))}
               </ul>
           )} 
           </div>
@@ -136,9 +88,9 @@ export default class SearchForm extends Component {
   }
 }
 
-//img thumbnail not working
+//img thumbnail not working -- if book doesn't have image, thows error for whole page
 //would like to truncate long titles
 //want description to show on click
-//break up title and subject onto different "pages"?
+//break up title and subject onto different "pages"
 //catch if search yields no results
 //need media quieries to display several on a line

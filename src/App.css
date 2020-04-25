@@ -17,13 +17,21 @@ black/text: #050402
 }
 
 .App-header {
-  background-color:#fda381;
+  background-color: lightgray;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   font-size: calc(10px + 2vmin);
   color:#050402;
+}
+
+.App-footer {
+  font-size: 10px;
+  width: 100%;
+  background-color: lightgray;
+  padding-top: 10px;
+  text-align: right;
 }
 
 p {
@@ -68,7 +76,7 @@ li:hover {
 }
 
 li:last-child{
-  margin-bottom: 50px;
+  margin-bottom: 35px;
 }
 
 /*Search bar styles*/

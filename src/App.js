@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchForm from './components/SearchForm';
+import SubjectSearchForm from './components/SubjectSearchForm';
 import topper from './book-topper.jpg';
 import './App.css';
 
@@ -12,7 +13,11 @@ function App() {
       </header>
       <div>
         <SearchForm />
+        <SubjectSearchForm />
       </div>
+      <footer className="App-footer">
+
+      </footer>
     </div>
   );
 }
