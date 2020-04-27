@@ -13,6 +13,8 @@ export default class SearchForm extends Component {
     bookDetails: {
       items: []
     },
+    bookHave: {
+    },
     isInfoShowing: false,
   }
   
@@ -38,9 +40,8 @@ export default class SearchForm extends Component {
     };
 
 
-  //currently showing error Unexpected token < in JSON at position 0
   moreDetails = async isbn => {
-    const deets = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${apiKey}&maxResults=1`);
+    const deets = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${apiKey}&maxResults=1`)
     const details = await deets.json();
     this.setState({ bookDetails: details });
     console.log(details);
@@ -73,7 +74,7 @@ export default class SearchForm extends Component {
               <h3>{this.state.bookDetails.items[0].volumeInfo.title}</h3>
               {this.state.bookDetails.items[0].volumeInfo.authors.map(author => (<p>{author}</p>))}
               <p>{this.state.bookDetails.items[0].volumeInfo.description}</p>
-              <a href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Google Books</a>
+              <a className="faux-button" href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Google Books</a>
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
@@ -82,7 +83,7 @@ export default class SearchForm extends Component {
                   <li
                     className="books-card"
                     key={book.etag}
-                    onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[0].identifier)}
+                    onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
                   >
                     {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                     <h3>{book.volumeInfo.title}</h3>
@@ -100,6 +101,7 @@ export default class SearchForm extends Component {
 }
 
 //img thumbnail not working -- if book doesn't have image, thows error for whole page
+//some google results don't have an isbn?!?!
 //would like to truncate long titles
 //break up title and subject onto different "pages"
 //catch if search yields no results

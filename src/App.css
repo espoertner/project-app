@@ -48,6 +48,7 @@ button {
   border: 0px;
   padding: 5px 10px;
   margin-left: 5px;
+  font-size: 13px;
 }
 
 button:hover {
@@ -101,7 +102,25 @@ li:last-child{
   border-radius: 5px;
   max-width: 80%;
   text-align: center;
-  padding: 5px;
+  padding: 10px;
+}
+
+.faux-button {
+  text-decoration: none;
+  background-color: #f56237;
+  color:#050402;
+  font-family: Arial;
+  font-size: 13px;
+  border-radius: 10px;
+  border: 0px;
+  padding: 5px 10px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.faux-button:hover {
+  background-color: #a80000;
+  color: white;
 }
 
 /*Media queries */
