@@ -11,6 +11,7 @@ export default class SearchForm extends Component {
         items: []
       },
     bookDetails: {
+      items: []
     },
     isInfoShowing: false,
   }
@@ -36,8 +37,13 @@ export default class SearchForm extends Component {
     console.log(books);
     };
 
-  moreDetails = () => {
 
+  //currently showing error Unexpected token < in JSON at position 0
+  moreDetails = async isbn => {
+    const deets = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${apiKey}&maxResults=1`);
+    const details = await deets.json();
+    this.setState({ bookDetails: details });
+    console.log(details);
     this.setState({ isInfoShowing: true });
   };
 
@@ -71,7 +77,7 @@ export default class SearchForm extends Component {
                   <li
                     className="books-card"
                     key={book.etag}
-                    onClick={() => this.moreDetails()}
+                    onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[0].identifier)}
                   >
                     {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                     <h3>{book.volumeInfo.title}</h3>
