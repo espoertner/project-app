@@ -68,7 +68,12 @@ export default class SearchForm extends Component {
         <div id="main-content">
           {this.state.isInfoShowing ? (
             <div className="book-card-detail">
-              <p>I want to to display the image, title, authors and descrpition from the selected book.</p>
+              <img src={this.state.bookDetails.items[0].volumeInfo.imageLinks.thumbnail} 
+                alt={this.state.bookDetails.items[0].volumeInfo.title}/>
+              <h3>{this.state.bookDetails.items[0].volumeInfo.title}</h3>
+              {this.state.bookDetails.items[0].volumeInfo.authors.map(author => (<p>{author}</p>))}
+              <p>{this.state.bookDetails.items[0].volumeInfo.description}</p>
+              <a href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Google Books</a>
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
@@ -96,7 +101,6 @@ export default class SearchForm extends Component {
 
 //img thumbnail not working -- if book doesn't have image, thows error for whole page
 //would like to truncate long titles
-//want description to show on click
 //break up title and subject onto different "pages"
 //catch if search yields no results
 //need media quieries to display several on a line
