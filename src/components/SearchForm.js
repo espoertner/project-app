@@ -81,7 +81,7 @@ export default class SearchForm extends Component {
               {this.state.didOpenLibRes ? (
                 //Open Library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
                 //CURRENT URL IS JUST PLACEHOLDER
-                <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink}>View in Open Library</a>) : (<></>)}
+                <a className="faux-button" href={this.state.openLib.info_url}>View in Open Library</a>) : (<></>)}
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
