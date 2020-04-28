@@ -121,9 +121,6 @@ export default class SearchForm extends Component {
   }
 }
 
-//img thumbnail not working -- if book doesn't have image, thows error for whole page -- can't get && working
-//some google results don't have an isbn?!?!
 //open library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
-//break up title and subject onto different "pages"
 //catch if search yields no results
 //need media quieries to display several on a line

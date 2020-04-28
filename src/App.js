@@ -11,7 +11,7 @@ function App() {
       <div className="App">
         <Header />
         <div>
-          <Route exact path="/" component={SearchForm}/>
+          <Route exact path="/title" component={SearchForm}/>
           <Route path="/subject" component={SubjectSearchForm}/>
         </div>
         <footer className="App-footer">
