@@ -13,8 +13,11 @@ export default class SearchForm extends Component {
     bookDetails: {
       items: []
     },
-    bookHave: {
+    currentISBN: {
     },
+    openLib: {
+    },
+    didOpenLibRes: false,
     isInfoShowing: false,
   }
   
@@ -35,21 +38,31 @@ export default class SearchForm extends Component {
 ) => {
     const response = await fetch(URL);
     const books = await response.json();
+    //const filteredBooks = books.filter(book => book.item.volumeInfo.imageLinks.thumbnail)
     this.setState({ books: books });
     console.log(books);
     };
 
-
   moreDetails = async isbn => {
     const deets = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${apiKey}&maxResults=1`)
     const details = await deets.json();
-    this.setState({ bookDetails: details });
+    this.setState({ bookDetails: details })
+    this.setState({ currentISBN : isbn})
     console.log(details);
+    console.log(isbn);
+    const libRes = await fetch(`http://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`);
+    const openLibRes = await libRes.json();
+    this.setState({ openLib: openLibRes });
+    if (Object.keys(this.state.openLib).length > 0)
+      this.setState({ didOpenLibRes: true })
+    console.log(openLibRes);
     this.setState({ isInfoShowing: true });
   };
 
+
   handleClose = () => {
     this.setState({ isInfoShowing: false });
+    this.setState({ didOpenLibRes: false });
   };
 
   render() {  
@@ -75,6 +88,8 @@ export default class SearchForm extends Component {
               {this.state.bookDetails.items[0].volumeInfo.authors.map(author => (<p>{author}</p>))}
               <p>{this.state.bookDetails.items[0].volumeInfo.description}</p>
               <a className="faux-button" href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Google Books</a>
+              {this.state.didOpenLibRes ? (
+                <a className="faux-button" href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Open Library</a>) : (<></>)}
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
@@ -88,6 +103,7 @@ export default class SearchForm extends Component {
                     {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                     <h3>{book.volumeInfo.title}</h3>
                     {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
+                    {/* <p>{book.etag}</p> */}
                   </li>
                 ))}
               </ul>
@@ -100,9 +116,10 @@ export default class SearchForm extends Component {
   }
 }
 
-//img thumbnail not working -- if book doesn't have image, thows error for whole page
+//img thumbnail not working -- if book doesn't have image, thows error for whole page -- can't get && working
+//would like to show "View in Open Library" only if they have page for it
+//open library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
 //some google results don't have an isbn?!?!
-//would like to truncate long titles
 //break up title and subject onto different "pages"
 //catch if search yields no results
 //need media quieries to display several on a line
