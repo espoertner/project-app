@@ -8,12 +8,8 @@ export default class SearchForm extends Component {
   
   state = {
     searchText: '',
-    books: {
-        items: []
-      },
-    bookDetails: {
-      items: []
-    },
+    books: [],
+    bookDetails: {},
     currentISBN: {
     },
     openLib: {
@@ -39,18 +35,17 @@ export default class SearchForm extends Component {
     URL = `https://www.googleapis.com/books/v1/volumes?q=${searchText}&key=${apiKey}&maxResults=20`
 ) => {
     const response = await fetch(URL);
-    const books = await response.json();
-    //this line issue -> says books.filter is not a function
-    const filteredBooks = books.filter(book => book.item.volumeInfo.imageLinks.thumbnail)
-    this.setState({ books: filteredBooks });
-    console.log(filteredBooks);
+    const json = await response.json();
+    const books = json.items.filter(item => item.volumeInfo.imageLinks && item.volumeInfo.authors && item.volumeInfo.title && item.volumeInfo.industryIdentifiers)
+    this.setState({ books: books });
+    console.log(books);
     };
 
   //handles fetching more info about a book from Google Books API
   moreDetails = async isbn => {
     const deets = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${apiKey}&maxResults=1`)
     const details = await deets.json();
-    this.setState({ bookDetails: details })
+    this.setState({ bookDetails: details.items[0] })
     //using isbn setState/console.log to help debugging
     this.setState({ currentISBN : isbn})
     console.log(details);
@@ -61,7 +56,7 @@ export default class SearchForm extends Component {
     this.setState({ openLib: openLibRes });
     //only shows info if Open Library has a page for that item
     if (Object.keys(this.state.openLib).length > 0)
-      this.setState({ didOpenLibRes: true })
+      this.setState({ didOpenLibRes: true });
     console.log(openLibRes);
     this.setState({ isInfoShowing: true });
   };
@@ -74,34 +69,36 @@ export default class SearchForm extends Component {
 
   render() {  
     return (
-      <div>
-        <form className="search-form" onSubmit={this.handleSubmit} >
-          <input
-            type="search"
-            onChange={e => this.onSearchChange(e.target.value)}
-            name="search"
-            value={this.state.searchText}
-            placeholder="Look for book by title"
-          />
-          <button type="submit" id="submit" className="search-button">Search</button>
-        </form>
-
         <div id="main-content">
           {this.state.isInfoShowing ? (
             <div className="book-card-detail">
-              <img src={this.state.bookDetails.items[0].volumeInfo.imageLinks.thumbnail} 
-                alt={this.state.bookDetails.items[0].volumeInfo.title}/>
-              <h3>{this.state.bookDetails.items[0].volumeInfo.title}</h3>
-              {this.state.bookDetails.items[0].volumeInfo.authors.map(author => (<p>{author}</p>))}
-              <p>{this.state.bookDetails.items[0].volumeInfo.description}</p>
-              <a className="faux-button" href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Google Books</a>
+            <img src={this.state.bookDetails.volumeInfo.imageLinks.thumbnail}
+                alt={this.state.bookDetails.volumeInfo.title}/>
+              <h3>{this.state.bookDetails.volumeInfo.title}</h3>
+              {this.state.bookDetails.volumeInfo.authors.map(author => (<p>{author}</p>))}
+              <p>{this.state.bookDetails.volumeInfo.description}</p>
+              <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink}>View in Google Books</a>
               {this.state.didOpenLibRes ? (
-                <a className="faux-button" href={this.state.bookDetails.items[0].volumeInfo.previewLink}>View in Open Library</a>) : (<></>)}
+                //Open Library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
+                //CURRENT URL IS JUST PLACEHOLDER
+                <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink}>View in Open Library</a>) : (<></>)}
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
+            <div>
+            <form className="search-form" onSubmit={this.handleSubmit} >
+              <input
+                type="search"
+                onChange={e => this.onSearchChange(e.target.value)}
+                name="search"
+                value={this.state.searchText}
+                placeholder="Look for book by title"
+              />
+              <button type="submit" id="submit" className="search-button">Search</button>
+            </form>
+
             <ul>
-                {this.state.books.items.map(book => (
+                {this.state.books.map(book => (
                   <li
                     className="books-card"
                     key={book.etag}
@@ -115,10 +112,10 @@ export default class SearchForm extends Component {
                   </li>
                 ))}
               </ul>
+              </div>
           )} 
           </div>
 
-      </div>   
 
     );
   }
