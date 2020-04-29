@@ -77,11 +77,9 @@ export default class SearchForm extends Component {
               <h3>{this.state.bookDetails.volumeInfo.title}</h3>
               {this.state.bookDetails.volumeInfo.authors.map(author => (<p>{author}</p>))}
               <p>{this.state.bookDetails.volumeInfo.description}</p>
-              <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink}>View in Google Books</a>
+              <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">View in Google Books</a>
               {this.state.didOpenLibRes ? (
-                //Open Library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
-                //CURRENT URL IS JUST PLACEHOLDER
-                <a className="faux-button" href={this.state.openLib.info_url}>View in Open Library</a>) : (<></>)}
+                <a className="faux-button" href={Object.values(this.state.openLib)[0].info_url} target="_blank" rel="noopener noreferrer">View in Open Library</a>) : (<></>)}
               <button onClick={this.handleClose}>Exit</button>
             </div>
           ) : (
