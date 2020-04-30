@@ -17,6 +17,7 @@ export default class SearchForm extends Component {
     authorDetails: {},
     didOpenLibRes: false,
     isInfoShowing: false,
+    showAuthorDets: false,
   }
   
   onSearchChange = input => {
@@ -33,7 +34,7 @@ export default class SearchForm extends Component {
   //handles fetching list of books from Google Books API
   fetchBooks = async ( 
     searchText = this.state.searchText,
-    URL = `https://www.googleapis.com/books/v1/volumes?q=${searchText}&key=${apiKey}&maxResults=20`
+    URL = `https://www.googleapis.com/books/v1/volumes?q=+intitle:${searchText}&key=${apiKey}&maxResults=20`
 ) => {
     const response = await fetch(URL);
     const json = await response.json();
@@ -73,12 +74,17 @@ export default class SearchForm extends Component {
     const authDetails = await authorDeets.json();
     this.setState({ authorDetails: authDetails.lead })
     console.log(authDetails.lead);
+    this.setState({ showAuthorDets: true });
   };
 
   //resets state on close; didOpenLibRes needs to be reset because not all books will return Open Lib pages
   handleClose = () => {
     this.setState({ isInfoShowing: false });
     this.setState({ didOpenLibRes: false });
+  };
+
+  authorClose = () => {
+    this.setState({ showAuthorDets: true });
   };
 
   render() {  
@@ -100,32 +106,32 @@ export default class SearchForm extends Component {
             </div>
           ) : (
             <div>
-            <form className="search-form" onSubmit={this.handleSubmit} >
-              <input
-                type="search"
-                onChange={e => this.onSearchChange(e.target.value)}
-                name="search"
-                value={this.state.searchText}
-                placeholder="Look for book by title"
-              />
-              <button type="submit" id="submit" className="search-button">Search</button>
-            </form>
+              <form className="search-form" onSubmit={this.handleSubmit} >
+                <input
+                  type="search"
+                  onChange={e => this.onSearchChange(e.target.value)}
+                  name="search"
+                  value={this.state.searchText}
+                  placeholder="Look for book by title"
+                />
+                <button type="submit" id="submit" className="search-button">Search</button>
+              </form>
 
-            <ul>
-                {this.state.books.map(book => (
-                  <li
-                    className="books-card"
-                    key={book.etag}
-                    onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
-                  >
-                    {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
-                    <h3>{book.volumeInfo.title}</h3>
-                    {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
-                    {/* line below with etag used for debugging */}
-                    {/* <p>{book.etag}</p> */}
-                  </li>
-                ))}
-              </ul>
+              <ul>
+                  {this.state.books.map(book => (
+                    <li
+                      className="books-card"
+                      key={book.etag}
+                      onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
+                    >
+                      {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
+                      <h3>{book.volumeInfo.title}</h3>
+                      {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
+                      {/* line below with etag used for debugging */}
+                      {/* <p>{book.etag}</p> */}
+                    </li>
+                  ))}
+                </ul>
               </div>
           )} 
           </div>
@@ -156,3 +162,13 @@ export default class SearchForm extends Component {
 //Monday
 //add notes
 //ask David/Christian for final check
+
+
+{/* <div className="book-card-detail">
+  <img src={this.state.authorDetails.image.urls[320]}
+      alt={this.state.authorDetails.displaytitle}/>
+  <h3>{this.state.authorDetails.displaytitle}</h3>
+  <h5>{this.state.authorDetails.description}</h5>
+  <p>{this.state.authorDetails.sections[0].text}</p>
+  <button onClick={this.authorClose}>Exit</button>
+</div> */}
