@@ -7,6 +7,10 @@ export default class SubjectSearchForm extends Component {
         booksSubject: {
           works: []
         },
+        openLibSub: {
+        },
+        currentISBN: {
+        },
         isInfoShowing: false,
     }
 
@@ -31,7 +35,11 @@ export default class SubjectSearchForm extends Component {
         console.log(subject);
         };
 
-    moreDetails = () => {
+    moreSubjectDetails = async openID => {
+        const opLibRes = await fetch(`http://openlibrary.org/api/books?bibkeys=olid:${openID}&jscmd=details&format=json`);
+        const openLibJson = await opLibRes.json();
+        this.setState({ openLibSub: openLibJson });
+        console.log(openLibJson);
         this.setState({ isInfoShowing: true });
     };
     
@@ -65,7 +73,7 @@ export default class SubjectSearchForm extends Component {
                 <li
                 className="books-card"
                 key={bookSub.key}
-                onClick={() => this.moreDetails()}
+                onClick={() => this.moreSubjectDetails(bookSub.lending_edition)}
                 >
                 <h3>{bookSub.title}</h3>
                 <p>{bookSub.authors[0].name}</p>

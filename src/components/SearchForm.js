@@ -14,6 +14,7 @@ export default class SearchForm extends Component {
     },
     openLib: {
     },
+    authorDetails: {},
     didOpenLibRes: false,
     isInfoShowing: false,
   }
@@ -36,7 +37,13 @@ export default class SearchForm extends Component {
 ) => {
     const response = await fetch(URL);
     const json = await response.json();
-    const books = json.items.filter(item => item.volumeInfo.imageLinks && item.volumeInfo.authors && item.volumeInfo.title && item.volumeInfo.industryIdentifiers)
+    //ensures results returned have all of the information we need to render the page
+    const books = json.items.filter(item => 
+      item.volumeInfo.imageLinks 
+      && item.volumeInfo.authors 
+      && item.volumeInfo.title 
+      && item.volumeInfo.industryIdentifiers 
+      && item.volumeInfo.description);
     this.setState({ books: books });
     console.log(books);
     };
@@ -61,6 +68,13 @@ export default class SearchForm extends Component {
     this.setState({ isInfoShowing: true });
   };
 
+  authorDetails = async author =>{
+    const authorDeets = await fetch(`https://en.wikipedia.org/api/rest_v1/page/mobile-sections/${author}?redirect=false`)
+    const authDetails = await authorDeets.json();
+    this.setState({ authorDetails: authDetails.lead })
+    console.log(authDetails.lead);
+  };
+
   //resets state on close; didOpenLibRes needs to be reset because not all books will return Open Lib pages
   handleClose = () => {
     this.setState({ isInfoShowing: false });
@@ -75,7 +89,9 @@ export default class SearchForm extends Component {
             <img src={this.state.bookDetails.volumeInfo.imageLinks.thumbnail}
                 alt={this.state.bookDetails.volumeInfo.title}/>
               <h3>{this.state.bookDetails.volumeInfo.title}</h3>
-              {this.state.bookDetails.volumeInfo.authors.map(author => (<p>{author}</p>))}
+              {this.state.bookDetails.volumeInfo.authors.map
+                (author => (<p onClick={() => this.authorDetails(author)}>{author}</p>)
+              )}
               <p>{this.state.bookDetails.volumeInfo.description}</p>
               <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">View in Google Books</a>
               {this.state.didOpenLibRes ? (
@@ -119,6 +135,24 @@ export default class SearchForm extends Component {
   }
 }
 
-//open library returns json named with ISBN -- how to access state? this.state.openLib[0].info_url
+//adds wikipedia API to pull author data
+
+//TO DO
+//Thursday
+//need to integrate use wiki API data
+//set up catch if there is no page/ 404 error
+
+//Friday
+//reconfigure subject search to use google API
+//add search by author & router
+
+//Saturday
+//fix look of app
+
+//Sunday
 //catch if search yields no results
-//need media quieries to display several on a line
+//add media quieries
+
+//Monday
+//add notes
+//ask David/Christian for final check
