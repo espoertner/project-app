@@ -4,7 +4,7 @@ import '../App.css';
 //imports Google Books API key from untracked .env file
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export default class SearchForm extends Component {
+export default class AuthorSearch extends Component {
   
   state = {
     searchText: '',
