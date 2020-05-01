@@ -2,7 +2,8 @@ import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import SearchForm from './components/SearchForm';
 import SubjectSearchG from './components/SubjectSearchG';
-import Header from './Header';
+import AuthorSearch from './components/AuthorSearch';
+import Header from './components/Header';
 import './App.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <div>
           <Route exact path="/title" component={SearchForm}/>
           <Route path="/subject" component={SubjectSearchG}/>
+          <Route path="/author" component={AuthorSearch}/>
         </div>
         <footer className="App-footer">
 

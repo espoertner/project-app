@@ -112,26 +112,27 @@ export default class SearchForm extends Component {
                   onChange={e => this.onSearchChange(e.target.value)}
                   name="search"
                   value={this.state.searchText}
-                  placeholder="Look for book by title"
+                  placeholder="Look for books by title"
                 />
                 <button type="submit" id="submit" className="search-button">Search</button>
               </form>
-
-              <ul>
-                  {this.state.books.map(book => (
-                    <li
-                      className="books-card"
-                      key={book.etag}
-                      onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
-                    >
-                      {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
-                      <h3>{book.volumeInfo.title}</h3>
-                      {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
-                      {/* line below with etag used for debugging */}
-                      {/* <p>{book.etag}</p> */}
-                    </li>
-                  ))}
-                </ul>
+              <div className="card-wrapper">
+                <ul>
+                    {this.state.books.map(book => (
+                      <li
+                        className="books-card"
+                        key={book.etag}
+                        onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
+                      >
+                        {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
+                        <h3>{book.volumeInfo.title}</h3>
+                        {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
+                        {/* line below with etag used for debugging */}
+                        {/* <p>{book.etag}</p> */}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
           )} 
           </div>
@@ -144,20 +145,17 @@ export default class SearchForm extends Component {
 //adds wikipedia API to pull author data
 
 //TO DO
-//Thursday
-//need to integrate use wiki API data
-//set up catch if there is no page/ 404 error
 
 //Friday
-//reconfigure subject search to use google API
-//add search by author & router
+//set up catch if search yields no results
 
 //Saturday
-//fix look of app
+//reconfigure app
 
 //Sunday
-//catch if search yields no results
+//integrate wiki API
 //add media quieries
+  //vertical center align cards
 
 //Monday
 //add notes
