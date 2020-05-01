@@ -77,9 +77,19 @@ li:hover {
   color: white;
 }
 
-li:last-child{
-  margin-bottom: 35px;
+a {
+  text-decoration: none;
+  color:#050402;
 }
+
+.main-nav li {
+  padding: 10px;
+}
+
+.main-nav:active {
+  color:  #a80000;
+}
+
 
 /*Search bar styles*/
 .search-form {
@@ -89,6 +99,7 @@ li:last-child{
 }
 
 /*Card styles*/
+
 .books-card {
   background: white;
   border-radius: 5px;
@@ -102,9 +113,22 @@ li:last-child{
   margin: auto;
   border-radius: 5px;
   max-width: 80%;
+  min-height: 250px;
   text-align: center;
   padding: 10px;
+  text-align: left;
 }
+
+.book-card-detail img, 
+.book-card-detail p, 
+.book-card-detail h3 {
+  margin: 10px;
+}
+
+.book-card-detail img {
+  float: left;
+}
+
 
 .faux-button {
   background-color: #f56237;
@@ -114,6 +138,7 @@ li:last-child{
   border: 0px;
   padding: 5px 10px;
   margin-left: 5px;
+  margin-top: 10px;
   display: inline-block;
 }
 
@@ -122,11 +147,23 @@ li:last-child{
   color: white;
 }
 
-a {
-  text-decoration: none;
-  color:#050402;
-}
-
 /*Media queries */
+@media (min-width: 600px) {
+  .main-nav li {
+  display: inline;
+  }
+  .main-nav {
+    margin: 20px;
+  }
+  h1 {
+    margin-bottom: 30px;
+  }
+  .books-card {
+    display: inline-block;
+    max-width: 25%;
+    margin: 10px;
+    height: 200px;
+    overflow: hidden;
+  }
 
-/* li at larger screen sizes: width: 20%; display: inline-block; */
+}
