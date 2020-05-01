@@ -112,7 +112,7 @@ export default class SubjectSearchG extends Component {
                   onChange={e => this.onSearchChange(e.target.value)}
                   name="search"
                   value={this.state.searchText}
-                  placeholder="Look for book by subject"
+                  placeholder="Look for books by subject"
                 />
                 <button type="submit" id="submit" className="search-button">Search</button>
               </form>
