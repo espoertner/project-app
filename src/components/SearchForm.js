@@ -1,9 +1,11 @@
+//imports
 import React, { Component } from 'react';
 import '../App.css';
 
 //imports Google Books API key from untracked .env file
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+//title search component
 export default class SearchForm extends Component {
   
   state = {
@@ -14,10 +16,8 @@ export default class SearchForm extends Component {
     },
     openLib: {
     },
-    authorDetails: {},
     didOpenLibRes: false,
     isInfoShowing: false,
-    showAuthorDets: false,
   }
   
   onSearchChange = input => {
@@ -69,34 +69,24 @@ export default class SearchForm extends Component {
     this.setState({ isInfoShowing: true });
   };
 
-  authorDetails = async author =>{
-    const authorDeets = await fetch(`https://en.wikipedia.org/api/rest_v1/page/mobile-sections/${author}?redirect=false`)
-    const authDetails = await authorDeets.json();
-    this.setState({ authorDetails: authDetails.lead })
-    console.log(authDetails.lead);
-    this.setState({ showAuthorDets: true });
-  };
-
   //resets state on close; didOpenLibRes needs to be reset because not all books will return Open Lib pages
   handleClose = () => {
     this.setState({ isInfoShowing: false });
     this.setState({ didOpenLibRes: false });
   };
 
-  authorClose = () => {
-    this.setState({ showAuthorDets: true });
-  };
-
+  //return statement for browse by title
   render() {  
     return (
         <div id="main-content">
+          {/* isInfoShowing helps display either more book info or search list */}
           {this.state.isInfoShowing ? (
             <div className="book-card-detail">
             <img src={this.state.bookDetails.volumeInfo.imageLinks.thumbnail}
                 alt={this.state.bookDetails.volumeInfo.title}/>
               <h3>{this.state.bookDetails.volumeInfo.title}</h3>
               {this.state.bookDetails.volumeInfo.authors.map
-                (author => (<p onClick={() => this.authorDetails(author)}>{author}</p>)
+                (author => (<p>{author}</p>)
               )}
               <p>{this.state.bookDetails.volumeInfo.description}</p>
               <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">View in Google Books</a>
@@ -106,6 +96,7 @@ export default class SearchForm extends Component {
             </div>
           ) : (
             <div>
+              {/* Search bt title form */}
               <form className="search-form" onSubmit={this.handleSubmit} >
                 <input
                   type="search"
@@ -117,6 +108,7 @@ export default class SearchForm extends Component {
                 <button type="submit" id="submit" className="search-button">Search</button>
               </form>
               <div className="card-wrapper">
+              {/* Item list returned from search */}
                 <ul>
                     {this.state.books.map(book => (
                       <li
@@ -124,7 +116,6 @@ export default class SearchForm extends Component {
                         key={book.etag}
                         onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
                       >
-                        {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                         <h3>{book.volumeInfo.title}</h3>
                         {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
                         {/* line below with etag used for debugging */}
@@ -141,32 +132,11 @@ export default class SearchForm extends Component {
     );
   }
 }
-
-//adds wikipedia API to pull author data
-
 //TO DO
 
-//Friday
 //set up catch if search yields no results
 
-//Saturday
-//reconfigure app
-
-//Sunday
-//integrate wiki API
 //add media quieries
   //vertical center align cards
 
-//Monday
 //add notes
-//ask David/Christian for final check
-
-
-{/* <div className="book-card-detail">
-  <img src={this.state.authorDetails.image.urls[320]}
-      alt={this.state.authorDetails.displaytitle}/>
-  <h3>{this.state.authorDetails.displaytitle}</h3>
-  <h5>{this.state.authorDetails.description}</h5>
-  <p>{this.state.authorDetails.sections[0].text}</p>
-  <button onClick={this.authorClose}>Exit</button>
-</div> */}
