@@ -7,6 +7,7 @@ orange: #f56237
 red: #a80000
 black/text: #050402
 */
+
 .App {
   background-color: lightgray;
   min-height:100vh;
@@ -90,7 +91,6 @@ a {
   color:  #a80000;
 }
 
-
 /*Search bar styles*/
 .search-form {
   padding: 10px;
@@ -128,7 +128,6 @@ a {
 .book-card-detail img {
   float: left;
 }
-
 
 .faux-button {
   background-color: #f56237;
