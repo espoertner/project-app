@@ -1,7 +1,7 @@
 # Book project app
 
 ## Project Summary
-This project uses several book-focused APIs to let people search for books by title or subject. 
+This project uses several book-focused APIs to let people search for books by title, author or subject. 
 
 ## Technical summary
 Language/framework: JavaScript with React
@@ -9,20 +9,20 @@ Language/framework: JavaScript with React
 API(s): Google Books, Archive.org/Open Library (Open Library API's are a subset of those found on Archive.org)
 
 ## Features
-* Search for a book by title or subject
+* Search for a book by title, author or subject
 
-* Results are displayed with book title author name and book photo (if available)
+* Results are displayed with book title and author name
 
-* On click, a result will display the same information as well as a summary
+* On click, a result will display book image, title, author name, and a summary
 
-* Users can view book's avalibility on Open Library
+* Users can view book on Google Books or Open Library (if available for the selected title)
 
 ## Milestones
 * Build title search function using Google's API
 
 * Create styles for the home page and results with CSS
 
-* Build subject search function using Open Library's API
+* Build subject and author search function using Google Book's API
 
 * Enable 'on click' feature to display more information about a selected book
 
@@ -31,7 +31,8 @@ API(s): Google Books, Archive.org/Open Library (Open Library API's are a subset 
 * Integrate React Router
 
 ## Requirements to run the project
-Google Book API requires a key. Acquire an API key by following Google's instructions [here](https://developers.google.com/books/docs/v1/getting_started). Save the API key in a .env file.
+Google Book API requires a key. Acquire an API key by following Google's instructions [here](https://developers.google.com/books/docs/v1/getting_started). Create a .env file in the project folder and save the key as such: 
+REACT_APP_GOOGLE_API_KEY=YourKeyHere
 
 Running npm install in project-app directory.
 
