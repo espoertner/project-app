@@ -96,7 +96,7 @@ export default class SearchForm extends Component {
                 alt={this.state.bookDetails.volumeInfo.title}/>
               <h3>{this.state.bookDetails.volumeInfo.title}</h3>
               {this.state.bookDetails.volumeInfo.authors.map
-                (author => (<p>{author}</p>)
+                (author => (<p className="author-name">{author}</p>)
               )}
               <p>{this.state.bookDetails.volumeInfo.description}</p>
               <a className="faux-button" href={this.state.bookDetails.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">View in Google Books</a>

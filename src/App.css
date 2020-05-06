@@ -123,6 +123,10 @@ a {
   float: left;
 }
 
+.author-name {
+  font-style: italic;
+}
+
 .book-card-detail button {
   display: block;
   margin: 5px auto;
