@@ -1,12 +1,4 @@
 /*App Styles*/
-/*Color palette
-dark blue: #3f5e63
-light blue: #69969c
-pink: #fda381
-orange: #f56237
-red: #a80000
-black/text: #050402
-*/
 
 .App {
   background-color: lightgray;
@@ -23,7 +15,6 @@ black/text: #050402
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-size: calc(10px + 2vmin);
   color:#050402;
 }
 
@@ -51,6 +42,7 @@ button {
   padding: 5px 10px;
   margin-left: 5px;
   font-size: 13px;
+  text-align: center;
 }
 
 button:hover {
@@ -70,7 +62,7 @@ li {
   list-style: none;
   width: 80%;
   margin: auto;
-  padding: 1em;
+  padding: 10px;
 }
 
 li:hover {
@@ -83,8 +75,8 @@ a {
   color:#050402;
 }
 
-.main-nav li {
-  padding: 10px;
+.main-nav a {
+  display: block;
 }
 
 .main-nav:active {
@@ -92,6 +84,7 @@ a {
 }
 
 /*Search bar styles*/
+
 .search-form {
   padding: 10px;
   text-align: center;
@@ -110,23 +103,30 @@ a {
 
 .book-card-detail {
   background: white;
-  margin: auto;
+  margin: 20px auto;
   border-radius: 5px;
   max-width: 80%;
   min-height: 250px;
   text-align: center;
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .book-card-detail img, 
 .book-card-detail p, 
 .book-card-detail h3 {
   margin: 10px;
+  text-align: left;
 }
 
 .book-card-detail img {
   float: left;
+}
+
+.book-card-detail button {
+  display: block;
+  margin: 5px auto;
+  width: 25%;
 }
 
 .faux-button {
@@ -136,14 +136,38 @@ a {
   border-radius: 10px;
   border: 0px;
   padding: 5px 10px;
-  margin-left: 5px;
-  margin-top: 10px;
-  display: inline-block;
+  margin: 5px auto;
+  width: 50%;
+  text-align: center;
+  align-content: center;
+  display: block;
 }
 
 .faux-button:hover {
   background-color: #a80000;
   color: white;
+}
+
+/*Error styles */
+
+.not-found{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.not-found img {
+  max-width: 60vw;
+}
+
+.not-found h3 {
+  text-transform: uppercase;
+}
+
+.error {
+  margin: auto;
+  margin-top: 20px;
+  max-width: 70%;
+  color: #a80000 ;
 }
 
 /*Media queries */
@@ -157,12 +181,42 @@ a {
   h1 {
     margin-bottom: 30px;
   }
+
+  .card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .books-card {
-    display: inline-block;
-    max-width: 25%;
+    max-width: 30%;
     margin: 10px;
-    height: 200px;
-    overflow: hidden;
+  }
+
+  .not-found img {
+    max-width: 40vw;
+  }
+
+  .main-nav li {
+    padding: 10px;
+  }
+
+  .main-nav a {
+    display: inline-block;
+  }
+  
+  .faux-button {
+    width: auto;
+    min-width: 25%;
+    margin: 5px 5px;
+    display: inline-block;
+  }
+
+}
+
+@media (min-width: 900px) {
+  .books-card {
+    max-width: 25%;
   }
 
 }
