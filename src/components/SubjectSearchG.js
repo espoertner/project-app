@@ -115,6 +115,7 @@ export default class SubjectSearchG extends Component {
                   name="search"
                   value={this.state.searchText}
                   placeholder="Look for books by subject"
+                  required
                 />
                 <button type="submit" id="submit" className="search-button">Search</button>
                 {/* If there is error fetching data, this will display */}
