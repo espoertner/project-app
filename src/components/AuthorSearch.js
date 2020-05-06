@@ -1,9 +1,11 @@
+//imports
 import React, { Component } from 'react';
-import '../App.css';
+import Error from './Error'
 
 //imports Google Books API key from untracked .env file
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+//author search component
 export default class AuthorSearch extends Component {
   
   state = {
@@ -17,13 +19,15 @@ export default class AuthorSearch extends Component {
     authorDetails: {},
     didOpenLibRes: false,
     isInfoShowing: false,
-    showAuthorDets: false,
+    error: false,
   }
   
+  //sets state of input from search feild
   onSearchChange = input => {
     this.setState({ searchText: input });
   };
 
+  //prevents default behavior, calls fetch on search submit
   handleSubmit = e => {
     this.setState({ searchText: e.target.value });
     e.preventDefault();
@@ -31,7 +35,7 @@ export default class AuthorSearch extends Component {
     this.fetchBooks();
   }
   
-  //handles fetching list of books from Google Books API
+  //handles fetching list of books by author from Google Books API
   fetchBooks = async ( 
     searchText = this.state.searchText,
     URL = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:${searchText}&key=${apiKey}&maxResults=20`
@@ -39,14 +43,21 @@ export default class AuthorSearch extends Component {
     const response = await fetch(URL);
     const json = await response.json();
     //ensures results returned have all of the information we need to render the page
-    const books = json.items.filter(item => 
-      item.volumeInfo.imageLinks 
-      && item.volumeInfo.authors 
-      && item.volumeInfo.title 
-      && item.volumeInfo.industryIdentifiers 
-      && item.volumeInfo.description);
-    this.setState({ books: books });
-    console.log(books);
+    try {
+      const books = json.items.filter(item => 
+        item.volumeInfo.imageLinks 
+        && item.volumeInfo.authors 
+        && item.volumeInfo.title 
+        && item.volumeInfo.industryIdentifiers 
+        && item.volumeInfo.description);
+      this.setState({ books: books });
+      console.log(books);
+      this.setState({ error: false });
+    }
+    //if the return from API is blank, error with be caught here
+    catch(err) {
+      this.setState({ error: true });
+    }
     };
 
   //handles fetching more info about a book from Google Books API
@@ -69,27 +80,17 @@ export default class AuthorSearch extends Component {
     this.setState({ isInfoShowing: true });
   };
 
-  authorDetails = async author =>{
-    const authorDeets = await fetch(`https://en.wikipedia.org/api/rest_v1/page/mobile-sections/${author}?redirect=false`)
-    const authDetails = await authorDeets.json();
-    this.setState({ authorDetails: authDetails.lead })
-    console.log(authDetails.lead);
-    this.setState({ showAuthorDets: true });
-  };
-
   //resets state on close; didOpenLibRes needs to be reset because not all books will return Open Lib pages
   handleClose = () => {
     this.setState({ isInfoShowing: false });
     this.setState({ didOpenLibRes: false });
   };
 
-  authorClose = () => {
-    this.setState({ showAuthorDets: true });
-  };
-
+  //return statement for browse by author
   render() {  
     return (
         <div id="main-content">
+          {/* isInfoShowing helps display either more book info or search list */}
           {this.state.isInfoShowing ? (
             <div className="book-card-detail">
             <img src={this.state.bookDetails.volumeInfo.imageLinks.thumbnail}
@@ -106,6 +107,7 @@ export default class AuthorSearch extends Component {
             </div>
           ) : (
             <div>
+              {/* Search by title form */}
               <form className="search-form" onSubmit={this.handleSubmit} >
                 <input
                   type="search"
@@ -115,16 +117,19 @@ export default class AuthorSearch extends Component {
                   placeholder="Look for books by author"
                 />
                 <button type="submit" id="submit" className="search-button">Search</button>
+                {/* If there is error fetching data, this will display */}
+                {
+                  this.state.error && <Error />
+                }
               </form>
-
-              <ul>
+              {/* Item list returned from search */}
+              <ul className="card-wrapper">
                   {this.state.books.map(book => (
                     <li
                       className="books-card"
                       key={book.etag}
                       onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
                     >
-                      {/* <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}/> */}
                       <h3>{book.volumeInfo.title}</h3>
                       {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
                       {/* line below with etag used for debugging */}

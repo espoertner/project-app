@@ -1,6 +1,6 @@
 //imports
 import React, { Component } from 'react';
-import '../App.css';
+import Error from './Error'
 
 //imports Google Books API key from untracked .env file
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -18,12 +18,15 @@ export default class SearchForm extends Component {
     },
     didOpenLibRes: false,
     isInfoShowing: false,
+    error: false,
   }
   
+  //sets state of input from search feild
   onSearchChange = input => {
     this.setState({ searchText: input });
   };
 
+  //prevents default behavior, calls fetch on search submit
   handleSubmit = e => {
     this.setState({ searchText: e.target.value });
     e.preventDefault();
@@ -31,7 +34,7 @@ export default class SearchForm extends Component {
     this.fetchBooks();
   }
   
-  //handles fetching list of books from Google Books API
+  //handles fetching list of books by title from Google Books API
   fetchBooks = async ( 
     searchText = this.state.searchText,
     URL = `https://www.googleapis.com/books/v1/volumes?q=+intitle:${searchText}&key=${apiKey}&maxResults=20`
@@ -39,14 +42,21 @@ export default class SearchForm extends Component {
     const response = await fetch(URL);
     const json = await response.json();
     //ensures results returned have all of the information we need to render the page
-    const books = json.items.filter(item => 
-      item.volumeInfo.imageLinks 
-      && item.volumeInfo.authors 
-      && item.volumeInfo.title 
-      && item.volumeInfo.industryIdentifiers 
-      && item.volumeInfo.description);
-    this.setState({ books: books });
-    console.log(books);
+    try {
+      const books = json.items.filter(item => 
+        item.volumeInfo.imageLinks 
+        && item.volumeInfo.authors 
+        && item.volumeInfo.title 
+        && item.volumeInfo.industryIdentifiers 
+        && item.volumeInfo.description);
+      this.setState({ books: books });
+      console.log(books);
+      this.setState({ error: false });
+    }
+    //if the return from API is blank, error with be caught here
+    catch(err) {
+      this.setState({ error: true });
+    }
     };
 
   //handles fetching more info about a book from Google Books API
@@ -96,7 +106,7 @@ export default class SearchForm extends Component {
             </div>
           ) : (
             <div>
-              {/* Search bt title form */}
+              {/* Search by title form */}
               <form className="search-form" onSubmit={this.handleSubmit} >
                 <input
                   type="search"
@@ -104,26 +114,29 @@ export default class SearchForm extends Component {
                   name="search"
                   value={this.state.searchText}
                   placeholder="Look for books by title"
+                  required
                 />
                 <button type="submit" id="submit" className="search-button">Search</button>
+                {/* If there is error fetching data, this will display */}
+                {
+                  this.state.error && <Error />
+                }
               </form>
-              <div className="card-wrapper">
               {/* Item list returned from search */}
-                <ul>
-                    {this.state.books.map(book => (
-                      <li
-                        className="books-card"
-                        key={book.etag}
-                        onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
-                      >
+              <ul className="card-wrapper">
+                  {this.state.books.map(book => (
+                    <li
+                      className="books-card"
+                      key={book.etag}
+                      onClick={() => this.moreDetails(book.volumeInfo.industryIdentifiers[1].identifier)}
+                    > 
                         <h3>{book.volumeInfo.title}</h3>
                         {book.volumeInfo.authors.map(author => (<p>{author}</p>))}
                         {/* line below with etag used for debugging */}
                         {/* <p>{book.etag}</p> */}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
           )} 
           </div>
@@ -132,11 +145,3 @@ export default class SearchForm extends Component {
     );
   }
 }
-//TO DO
-
-//set up catch if search yields no results
-
-//add media quieries
-  //vertical center align cards
-
-//add notes
